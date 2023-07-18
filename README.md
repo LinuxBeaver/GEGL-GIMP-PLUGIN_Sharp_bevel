@@ -25,7 +25,10 @@ C:\Users\USERNAME\AppData\Local\gegl-0.4\plug-ins
  /home/(USERNAME)/.var/app/org.gimp.GIMP/data/gegl-0.4/plug-ins
 
 
-## Compiling and Installing
+## Compiling and Installing**
+SHARP BEVEL REQUIRES MY EDGE SMOOTH AND THRESHOLD ALPHA 2 TO WORK PROPER SO COMPILE THAT TOO If you use prebuilt binaries you don't have to compile anything.
+
+
 Linux
 
 To compile and install you will need the GEGL header files (libgegl-dev on Debian based distributions or gegl on Arch Linux) and meson (meson on most distributions).
