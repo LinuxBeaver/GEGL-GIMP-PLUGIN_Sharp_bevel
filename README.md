@@ -38,6 +38,7 @@ ninja -C build
 
 
 If you have an older version of gegl you may need to copy to ~/.local/share/gegl-0.3/plug-ins instead (on Ubuntu 18.04 for example).
+
 **Windows**
 
 The easiest way to compile this project on Windows is by using msys2. Download and install it from here: https://www.msys2.org/
