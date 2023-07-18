@@ -58,4 +58,9 @@ ninja -C build
 
 ![image](https://github.com/LinuxBeaver/GEGL_sharp_bevel_gimp_plugin/assets/78667207/cb238a4c-f79f-49f9-a049-2d7a6ae7a9ee)
 
+![image](https://github.com/LinuxBeaver/GEGL_sharp_bevel_gimp_plugin/assets/78667207/c058a372-d30d-4c44-bb17-982e40c33e0c)
+
+![image](https://github.com/LinuxBeaver/GEGL_sharp_bevel_gimp_plugin/assets/78667207/361f7670-bdc5-415b-812b-8dfe97cc1e89)
+
+
 
