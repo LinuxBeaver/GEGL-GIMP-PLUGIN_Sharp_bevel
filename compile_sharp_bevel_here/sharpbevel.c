@@ -222,6 +222,7 @@ typedef struct
   GeglNode *nop;
   GeglNode *levels;
   GeglNode *col;
+  GeglNode *allowblack;
   GeglNode *imagefileoverlay;
   GeglNode *grainmerge;
   GeglNode *overlay;
@@ -257,7 +258,7 @@ default: usethis = state->hardlight;
 
   if (o->bevelcolorpolicy)
   {
-  gegl_node_link_many (state->input,  state->median, state->dt, state->smooth, state->fix, state->c2a, state->col, state->nop, usethis, state->opacity, state->fix2, state->ta2, state->levels, state->multiply2, state->edgesmooth, state->ta2again, state->sharpen, state->output, NULL);
+  gegl_node_link_many (state->input, state->allowblack, state->median, state->dt, state->smooth, state->fix, state->c2a, state->col, state->nop, usethis, state->opacity, state->fix2, state->ta2, state->levels, state->multiply2, state->edgesmooth, state->ta2again, state->sharpen, state->output, NULL);
 /* Most of the GEGL nodes are here. usethis is a potential blend that users can choose. The nop behaves like a id/ref */
   gegl_node_connect_from (usethis, "aux", state->emboss, "output");
   gegl_node_link_many (state->nop, state->emboss,  NULL);
@@ -269,7 +270,7 @@ default: usethis = state->hardlight;
 
 else
   {
-  gegl_node_link_many (state->input, state->fix3, state->multiply4, state->idref, state->median, state->dt, state->smooth, state->fix, state->c2a, state->nop, usethis, state->opacity, state->fix2, state->ta2, state->graph, state->multiply2,  state->multiply3, state->levels, state->edgesmooth, state->ta2again, state->sharpen, state->output, NULL);
+  gegl_node_link_many (state->input, state->allowblack, state->fix3, state->multiply4, state->idref, state->median, state->dt, state->smooth, state->fix, state->c2a, state->nop, usethis, state->opacity, state->fix2, state->ta2, state->graph, state->multiply2,  state->multiply3, state->levels, state->edgesmooth, state->ta2again, state->sharpen, state->output, NULL);
 /* Most of the GEGL nodes are here. usethis is a potential blend that users can choose. The nop behaves like a id/ref */
   gegl_node_connect_from (usethis, "aux", state->emboss, "output");
   gegl_node_link_many (state->nop, state->emboss,  NULL);
@@ -291,7 +292,7 @@ static void attach (GeglOperation *operation)
 {
   GeglNode *gegl = operation->node;
 GeglProperties *o = GEGL_PROPERTIES (operation);
-  GeglNode *input, *output, *fix, *fix2, *fix3, *smooth, *edgesmooth, *multiply3, *multiply4, *sharpen, *levels, *idref, *graph, *ta2, *ta2again, *opacity, *multiply, *dt, *c2a, *multiply2,  *imagefileoverlay, *median, *hardlight, *emboss,  *embossblend, *addition, *colordodge, *grainmerge, *softlight, *overlay, *darken, *lighten,  *col, *nop, *plus;
+  GeglNode *input, *output, *fix, *fix2, *fix3, *smooth, *allowblack, *edgesmooth, *multiply3, *multiply4, *sharpen, *levels, *idref, *graph, *ta2, *ta2again, *opacity, *multiply, *dt, *c2a, *multiply2,  *imagefileoverlay, *median, *hardlight, *emboss,  *embossblend, *addition, *colordodge, *grainmerge, *softlight, *overlay, *darken, *lighten,  *col, *nop, *plus;
   GeglColor *embeddedcolorbevel2 = gegl_color_new ("#000000");
 /* This is an embedded color (black) */
 
@@ -375,6 +376,10 @@ drop shadow is applied in a gegl graph below them. median 0 solves this.*/
 
   levels    = gegl_node_new_child (gegl,
                                   "operation", "gegl:levels",
+                                  NULL);
+
+  allowblack    = gegl_node_new_child (gegl,
+                                  "operation", "gegl:levels", "out-low", 0.006,
                                   NULL);
 
   emboss    = gegl_node_new_child (gegl,
@@ -534,6 +539,7 @@ multiply2 = gegl_node_new_child (gegl,
   state->nop = nop;
   state->levels = levels;
   state->idref = idref;
+  state->allowblack = allowblack;
   state->multiply3 = multiply3;
   state->multiply4 = multiply4;
   state->imagefileoverlay = imagefileoverlay;
