@@ -88,6 +88,10 @@ property_int  (size, _("Size of the Bevel"), 3)
   ui_meta     ("unit", "pixel-distance")
   description (_("Median Radius to control the size of the bevel"))
 
+property_double (bevelcontrol, _("Bevel's Flat Surface control"), 1)
+    value_range (1.0, 6.0)
+  description (_("Moving this slider up will give the bevel a flat surface. At 1 it will be a default sharp surface."))
+
 property_double (azimuth, _("Azimuth"), 67.0)
     description (_("Light angle (degrees)"))
     value_range (20, 90)
@@ -219,6 +223,7 @@ typedef struct
   GeglNode *lighten;
   GeglNode *opacity;
   GeglNode *multiply2;
+  GeglNode *multiply5;
   GeglNode *nop;
   GeglNode *levels;
   GeglNode *col;
@@ -258,7 +263,7 @@ default: usethis = state->hardlight;
 
   if (o->bevelcolorpolicy)
   {
-  gegl_node_link_many (state->input, state->allowblack, state->median, state->dt, state->smooth, state->fix, state->c2a, state->col, state->nop, usethis, state->opacity, state->fix2, state->ta2, state->levels, state->multiply2, state->edgesmooth, state->ta2again, state->sharpen, state->output, NULL);
+  gegl_node_link_many (state->input, state->allowblack, state->median, state->dt, state->multiply5, state->smooth, state->fix, state->c2a, state->col, state->nop, usethis, state->opacity, state->fix2, state->ta2, state->levels, state->multiply2, state->edgesmooth, state->ta2again, state->sharpen, state->output, NULL);
 /* Most of the GEGL nodes are here. usethis is a potential blend that users can choose. The nop behaves like a id/ref */
   gegl_node_connect_from (usethis, "aux", state->emboss, "output");
   gegl_node_link_many (state->nop, state->emboss,  NULL);
@@ -270,7 +275,7 @@ default: usethis = state->hardlight;
 
 else
   {
-  gegl_node_link_many (state->input, state->allowblack, state->fix3, state->multiply4, state->idref, state->median, state->dt, state->smooth, state->fix, state->c2a, state->nop, usethis, state->opacity, state->fix2, state->ta2, state->graph, state->multiply2,  state->multiply3, state->levels, state->edgesmooth, state->ta2again, state->sharpen, state->output, NULL);
+  gegl_node_link_many (state->input, state->allowblack, state->fix3, state->multiply4, state->idref, state->median, state->dt, state->multiply5, state->smooth, state->fix, state->c2a, state->nop, usethis, state->opacity, state->fix2, state->ta2, state->graph, state->multiply2,  state->multiply3, state->levels, state->edgesmooth, state->ta2again, state->sharpen, state->output, NULL);
 /* Most of the GEGL nodes are here. usethis is a potential blend that users can choose. The nop behaves like a id/ref */
   gegl_node_connect_from (usethis, "aux", state->emboss, "output");
   gegl_node_link_many (state->nop, state->emboss,  NULL);
@@ -292,7 +297,7 @@ static void attach (GeglOperation *operation)
 {
   GeglNode *gegl = operation->node;
 GeglProperties *o = GEGL_PROPERTIES (operation);
-  GeglNode *input, *output, *fix, *fix2, *fix3, *smooth, *allowblack, *edgesmooth, *multiply3, *multiply4, *sharpen, *levels, *idref, *graph, *ta2, *ta2again, *opacity, *multiply, *dt, *c2a, *multiply2,  *imagefileoverlay, *median, *hardlight, *emboss,  *embossblend, *addition, *colordodge, *grainmerge, *softlight, *overlay, *darken, *lighten,  *col, *nop, *plus;
+  GeglNode *input, *output, *fix, *fix2, *fix3, *smooth, *allowblack, *edgesmooth, *multiply3, *multiply4, *multiply5, *sharpen, *levels, *idref, *graph, *ta2, *ta2again, *opacity, *multiply, *dt, *c2a, *multiply2,  *imagefileoverlay, *median, *hardlight, *emboss,  *embossblend, *addition, *colordodge, *grainmerge, *softlight, *overlay, *darken, *lighten,  *col, *nop, *plus;
   GeglColor *embeddedcolorbevel2 = gegl_color_new ("#000000");
 /* This is an embedded color (black) */
 
@@ -416,6 +421,11 @@ Though I must clarify that I went much further with it. */
                                   "operation", "gegl:multiply",
                                   NULL);
 
+  multiply5    = gegl_node_new_child (gegl,
+                                  "operation", "gegl:multiply",
+                                  NULL);
+
+
 
  /*This blend mode is used by image file upload. All the other blend modes are reversed for emboss.*/
 
@@ -503,6 +513,7 @@ multiply2 = gegl_node_new_child (gegl,
   gegl_operation_meta_redirect (operation, "ollight", levels, "out-low");
   gegl_operation_meta_redirect (operation, "transvalue", c2a, "transparency-threshold");
   gegl_operation_meta_redirect (operation, "sharpen", sharpen, "std-dev");
+  gegl_operation_meta_redirect (operation, "bevelcontrol", multiply5, "value");
 
   /* now save references to the gegl nodes so we can use them
    * later, when update_graph() is called
@@ -544,6 +555,7 @@ multiply2 = gegl_node_new_child (gegl,
   state->multiply4 = multiply4;
   state->imagefileoverlay = imagefileoverlay;
   state->multiply2 = multiply2;
+  state->multiply5 = multiply5;
   state->output = output;
 
   o->user_data = state;
