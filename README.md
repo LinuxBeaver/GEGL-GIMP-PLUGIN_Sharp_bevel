@@ -54,6 +54,9 @@ ninja -C build
 
 ## More previews of this based plugin.
 
+![image](https://github.com/LinuxBeaver/GEGL_sharp_bevel_gimp_plugin/assets/78667207/dc628f1f-18f7-42df-90d2-2f6c1f9f2ac2)
+
+
 ![image](https://github.com/LinuxBeaver/GEGL_sharp_bevel_gimp_plugin/assets/78667207/2095c24e-2f93-4d08-8931-49c8bc823884)
 
 ![image](https://github.com/LinuxBeaver/GEGL_sharp_bevel_gimp_plugin/assets/78667207/cb238a4c-f79f-49f9-a049-2d7a6ae7a9ee)
