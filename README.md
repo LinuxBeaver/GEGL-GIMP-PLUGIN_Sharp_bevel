@@ -24,11 +24,6 @@ C:\Users\USERNAME\AppData\Local\gegl-0.4\plug-ins
  Linux (Flatpak)
  /home/(USERNAME)/.var/app/org.gimp.GIMP/data/gegl-0.4/plug-ins
 
-
-## Compiling and Installing**
-SHARP BEVEL REQUIRES MY EDGE SMOOTH AND THRESHOLD ALPHA 2 TO WORK PROPER SO COMPILE THAT TOO. If you use prebuilt binaries you don't have to compile anything.
-
-
 **Linux**
 
 To compile and install you will need the GEGL header files (libgegl-dev on Debian based distributions or gegl on Arch Linux) and meson (meson on most distributions).
@@ -55,7 +50,6 @@ ninja -C build
 ## More previews of this based plugin.
 
 ![image](https://github.com/LinuxBeaver/GEGL_sharp_bevel_gimp_plugin/assets/78667207/dc628f1f-18f7-42df-90d2-2f6c1f9f2ac2)
-
 
 ![image](https://github.com/LinuxBeaver/GEGL_sharp_bevel_gimp_plugin/assets/78667207/2095c24e-2f93-4d08-8931-49c8bc823884)
 
