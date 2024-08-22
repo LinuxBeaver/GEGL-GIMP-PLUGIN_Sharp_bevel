@@ -11,20 +11,27 @@ followed by an emboss. This is the first bevel plugin of mine to deviate from th
 Distance transform, color to alpha and emboss is the core principle behind sharp bevel.
 
 To see its very different sister plugin go here. (Sharp's description cites Custom Bevel.)
+
 https://github.com/LinuxBeaver/GEGL-Custom-Bevel/
 
 ## OS specific location to put GEGL Filter binaries 
 
-Windows
+**Windows**
+
 C:\Users\USERNAME\AppData\Local\gegl-0.4\plug-ins
  
- Linux 
+**Linux**
+
  /home/(USERNAME)/.local/share/gegl-0.4/plug-ins
  
- Linux (Flatpak)
+**Linux (Flatpak)**
  /home/(USERNAME)/.var/app/org.gimp.GIMP/data/gegl-0.4/plug-ins
 
 **Linux**
+
+## Compiling
+
+You can click the build .sh file to compile for your OS but below are manual instructions.
 
 To compile and install you will need the GEGL header files (libgegl-dev on Debian based distributions or gegl on Arch Linux) and meson (meson on most distributions).
 
