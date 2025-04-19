@@ -82,7 +82,7 @@ property_boolean (bevelcolorpolicy , _("Enable Color Priority mode"), FALSE)
   description    (_("This (when enabled) disables the bevel's ability to get the layers color information. But in return the color overlay will be enabled. Due to the logic of this filter very dark colors or black will not work with it."))
 
 
-property_int  (size, _("Size of the Bevel"), 3)
+property_int  (size, _("Size of the Bevel"), 1)
   value_range (1, 9)
   ui_range    (1, 9)
   ui_meta     ("unit", "pixel-distance")
@@ -90,13 +90,15 @@ property_int  (size, _("Size of the Bevel"), 3)
 
 property_double (bevelcontrol, _("Bevel's Flat Surface control"), 1)
     value_range (1.0, 6.0)
+  ui_range (1.0, 3.0)
   description (_("Moving this slider up will give the bevel a flat surface. At 1 it will be a default sharp surface."))
 
-property_double (azimuth, _("Azimuth"), 67.0)
+property_double (azimuth, _("Azimuth"), 40.0)
     description (_("Light angle (degrees)"))
-    value_range (20, 90)
+    value_range (0, 360)
     ui_meta ("unit", "degree")
     ui_meta ("direction", "ccw")
+  ui_steps      (0.1, 0.50)
 
 property_double (elevation, _("Elevation"), 25.0)
     description (_("Elevation angle (degrees). This appears to rotate the brightest pixels."))
@@ -108,7 +110,7 @@ property_int (depth, _("Depth and or detail"), 24)
     value_range (8, 100)
 
 
-property_double (smooth, _("Smooth Bevel"), 9)
+property_double (smooth, _("Smooth Bevel"), 5)
     description (_("Smooth the Bevel with mean curvature to make it less rough looking. If this is on very low values  the bevel will look very rough, but on very high values it will make the filter slow."))
     value_range (1, 20)
 
@@ -578,7 +580,6 @@ GeglOperationMetaClass *operation_meta_class = GEGL_OPERATION_META_CLASS (klass)
   gegl_operation_class_set_keys (operation_class,
     "name",        "lb:sharpbevel",
     "title",       _("Sharp Chamfer Bevel"),
-    "categories",  "Artistic",
     "reference-hash", "v76ao6gk4321vyeef625362f2ag",
     "description", _("GEGL makes a chamfer bevel allowing choice of bevel size, and internal blend modes.  Different blend modes do different things regarding detail, depth or presence of a shine effect."
                      ""),
